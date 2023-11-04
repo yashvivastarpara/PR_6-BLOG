@@ -13,43 +13,40 @@ app.get('/user/signup', (req, res) => {
 });
 
 
-// app.post('/user/signup', (req, res) => {
-//   const { username, email } = req.body;
+app.post('/user/signup', (req, res) => {
+  const { username, email } = req.body;
 
-//   const existingUser = users.find((user) => user.email === email);
+  const existingUser = users.find((user) => user.email === email);
 
-//   if (existingUser) {
-//     res.send(username);
-//   } else {
-//     users.push({ username, email });
-//     res.send(`Account created successfully ${username}`);
-//   }
-// });
+  if (existingUser) {
+    res.send(username);
+  } else {
+    users.push({ username, email });
+    res.send(`Account created successfully ${username}`);
+  }
+});
 
-// app.get('/user/login', (req, res) => {
-//     res.render('login');
-//   });
-//   app.post('/user/login', (req, res) => {
-//     const { email, password } = req.body;
+app.get('/user/login', (req, res) => {
+    res.render('login');
+  });
+  app.post('/user/login', (req, res) => {
+    const { email, password } = req.body;
   
-//     if (isUserAuthenticated(email, password)) {
-//       const username = getUserUsername(email);
-//       const role = getUserRole(email);
-//       const userId = getUserId(email);
+    if (isUserAuthenticated(email, password)) {
+      const username = getUserUsername(email);
+      const role = getUserRole(email);
+      const userId = getUserId(email);
   
-//       res.cookie('userRole', role);
-//       res.cookie('userId', userId);
-//       res.send(`Welcome User ${username}`);
-//     } else {
-//       res.send('Authentication failed. Please check your email and password.');
-//     }
-// });
-  
+      res.cookie('userRole', role);
+      res.cookie('userId', userId);
+      res.send(`Welcome User ${username}`);
+    } else {
+      res.send('Authentication failed. Please check your email and password.');
+    }
+});
+
   
 app.listen(8090,()=>{
     console.log("listening on port 8090");
     connect();
 })
-
-
-
