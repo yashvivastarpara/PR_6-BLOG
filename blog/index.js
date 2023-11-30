@@ -12,7 +12,6 @@
 //   res.render('signup');
 // });
 
-
 // app.post('/user/signup', (req, res) => {
 //   const { username, email } = req.body;
 
@@ -31,12 +30,12 @@
 //   });
 //   app.post('/user/login', (req, res) => {
 //     const { email, password } = req.body;
-  
+
 //     if (isUserAuthenticated(email, password)) {
 //       const username = getUserUsername(email);
 //       const role = getUserRole(email);
 //       const userId = getUserId(email);
-  
+
 //       res.cookie('userRole', role);
 //       res.cookie('userId', userId);
 //       res.send(`Welcome User ${username}`);
@@ -45,36 +44,39 @@
 //     }
 // });
 
-  
 // app.listen(8090,()=>{
 //     console.log("listening on port 8090");
 //     connect();
 // })
 
-const express=require("express");
+const express = require("express");
 const connect = require("./config/db");
-const cookie=require("cookie-parser")
+const cookie = require("cookie-parser");
 const user = require("./routes/user-route");
 const blog = require("./routes/blog-route");
-require("dotenv").config
+require("dotenv").config;
 
-const app=express()
+const app = express();
 
-app.use(express.json())
-app.use(cookie())
+app.use(express.json());
+app.use(cookie());
 
 app.set("view engine", "ejs");
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/',(req,res)=>{
-    res.send("Welcome to the movie API")
-})
+app.get("/", (req, res) => {
+  res.send("Welcome to the movie API");
+});
+
+app.use(user);
+app.use("/blog", blog);
+
+app.listen(8090, () => {
+  console.log("connect to port 8090");
+  connect();
+});
 
 
-app.use(user)
-app.use("/blog",blog)
 
-app.listen(8090,()=>{
-    console.log("connect to port 8090");
-    connect()
-})
+
+
